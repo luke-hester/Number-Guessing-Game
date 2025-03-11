@@ -1,4 +1,5 @@
 from random import randint
+import time
 
 def get_difficulty():
     difficulty = 0
@@ -11,7 +12,7 @@ def get_difficulty():
         difficulty = input("Enter your choice: ")
         try:
             difficulty = int(difficulty)
-        except:
+        except ValueError:
             print("Please enter a number!")
         else:
             if 0 < difficulty < 4:
@@ -25,7 +26,7 @@ def get_guess():
     while not valid_guess:
         try:
             guess = int(input("Enter your guess: "))
-        except:
+        except ValueError:
             print("Please enter a number!")
         else:
             valid_guess = True
@@ -45,15 +46,17 @@ def game():
 
     print("Let's start the game!\n")
 
+    start_time = time.time()
     answer = randint(1, 100)
-    number_guessed = False
 
-    while not number_guessed and guesses_total - guesses_used > 0:
+    while guesses_total - guesses_used > 0:
         guess = get_guess()
         guesses_used += 1
         if guess == answer:
-            number_guessed = True
+            end_time = time.time()
+            total_time = end_time - start_time
             print(f"Congratulations! You guessed the correct number in {guesses_used} attempts.")
+            print(f"Time taken: {round(total_time,2)}s")
             break
         elif guess < answer:
             print(f"Incorrect! The number is greater than {guess}.")
@@ -64,4 +67,19 @@ def game():
     else:
         print(f"Sorry, you didn't get it this time! The answer was {answer}")
 
-game()
+while True:
+    game()
+    print("1. Play again")
+    print("2. Quit game")
+    while True:
+        try:
+            decision = int(input("Choose an option: "))
+        except ValueError:
+            print("Please enter a number")
+        else:
+            if decision < 1 or 2 < decision:
+                continue
+            else:
+                break
+    if decision == 2:
+        break
