@@ -64,7 +64,7 @@ def game():
 
     guesses_total = (difficulty == 1) and 10 or (difficulty == 2) and 5 or (difficulty == 3) and 3
     guesses_used = 0
-    numbers_guessed = []
+    numbers_guessed = set()
 
     print("Let's start the game!\n")
     answer = randint(1, 100)
@@ -80,7 +80,7 @@ def game():
                 print("You can't use a hint on your first guess!")
             continue
 
-        numbers_guessed.append(guess)
+        numbers_guessed.add(guess)
         guesses_used += 1
 
         if guess == answer:
