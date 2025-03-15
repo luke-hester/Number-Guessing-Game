@@ -62,7 +62,7 @@ def game():
     level = difficulty_levels[difficulty]
     print(f"Great! You have selected the {level} difficulty level.")
 
-    guesses_total = (difficulty == 1) and 10 or (difficulty == 2) and 5 or (difficulty == 3) and 3
+    guesses_total = {1: 10, 2: 5, 3: 3}[difficulty]
     guesses_used = 0
     numbers_guessed = set()
 
