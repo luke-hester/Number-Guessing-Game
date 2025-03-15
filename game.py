@@ -25,33 +25,64 @@ def get_guess():
     valid_guess = False
     while not valid_guess:
         try:
-            guess = int(input("Enter your guess: "))
+            print("Type 'Hint' for a bonus hint!")
+            guess = input("Enter your guess: ")
+            if guess != "Hint":
+                guess = int(guess)
         except ValueError:
             print("Please enter a number!")
         else:
             valid_guess = True
     return guess
 
+def give_hint(numbers_guessed, answer):
+    clg = float('-inf')
+    chg = float('inf')
+
+    for num in numbers_guessed:
+        if answer > num > clg:
+            clg = num
+        if answer < num < chg:
+            chg = num
+
+    clg = clg if clg != float('-inf') else 1
+    chg = chg if chg != float('inf') else 100
+
+    if abs(answer - chg) < abs(answer - clg):
+        print(f"The answer is closer to {chg} than {clg}")
+    else:
+        print(f"The answer is closer to {clg} than {chg}")
 
 def game():
     print("Welcome to the Number Guessing Game!")
     print("You must guess the number between 1 and 100\n")
 
     difficulty = get_difficulty()
-    level = (difficulty == 1) and "Easy" or (difficulty == 2) and "Medium" or (difficulty == 3) and "Hard"
+    difficulty_levels = {1: "Easy", 2: "Medium", 3: "Hard"}
+    level = difficulty_levels[difficulty]
     print(f"Great! You have selected the {level} difficulty level.")
 
     guesses_total = (difficulty == 1) and 10 or (difficulty == 2) and 5 or (difficulty == 3) and 3
     guesses_used = 0
+    numbers_guessed = []
 
     print("Let's start the game!\n")
-
-    start_time = time.time()
     answer = randint(1, 100)
+    start_time = time.time()
 
     while guesses_total - guesses_used > 0:
         guess = get_guess()
+
+        if guess == "Hint":
+            if guesses_used > 0:
+                give_hint(numbers_guessed, answer)
+            else:
+                print("You can't use a hint on your first guess!")
+            continue
+
+        numbers_guessed.append(guess)
         guesses_used += 1
+
         if guess == answer:
             end_time = time.time()
             total_time = end_time - start_time

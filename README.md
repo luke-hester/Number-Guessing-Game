@@ -7,9 +7,9 @@ It fits all the listed project requirements and I plan to add the rest of the re
 Current features:
 * Difficulty selection (Easy, Medium, Hard).
 * Hints after each guess ('higher' or 'lower').
+* Optional extra hint between guesses.
 * Tracks and displays number of guesses.
 * Tracks and displays time taken to guess.
 
 Planned features:
 * Highscore tracking
-* Optional extra hint before guessing
