@@ -10,4 +10,4 @@ __pycache__/
 *.pyo
 
 # Ignore leaderboard data
-leaderboard.txt
+leaderboard.csv
