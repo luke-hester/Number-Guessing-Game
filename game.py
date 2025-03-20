@@ -1,5 +1,6 @@
 from random import randint
 import time
+import leaderboards
 
 def get_difficulty():
     difficulty = 0
@@ -35,6 +36,15 @@ def get_guess():
             valid_guess = True
     return guess
 
+def get_name():
+    print("Enter your name to be added to the leaderboard or enter 0 to skip")
+    name = input("Enter name: ")
+    if name == "0":
+        return False
+    else:
+        return name
+
+
 def give_hint(numbers_guessed, answer):
     clg = float('-inf')
     chg = float('inf')
@@ -68,6 +78,7 @@ def game():
 
     print("Let's start the game!\n")
     answer = randint(1, 100)
+    print(answer)
     start_time = time.time()
 
     while guesses_total - guesses_used > 0:
@@ -88,6 +99,10 @@ def game():
             total_time = end_time - start_time
             print(f"Congratulations! You guessed the correct number in {guesses_used} attempts.")
             print(f"Time taken: {round(total_time,2)}s")
+            # leaderboard integration
+            name = get_name()
+            if name:
+                leaderboards.add(name, difficulty, guesses_used)
             break
         elif guess < answer:
             print(f"Incorrect! The number is greater than {guess}.")
@@ -101,16 +116,21 @@ def game():
 while True:
     game()
     print("1. Play again")
-    print("2. Quit game")
+    print("2. View leaderboard")
+    print("3. Quit game")
     while True:
         try:
             decision = int(input("Choose an option: "))
         except ValueError:
             print("Please enter a number")
         else:
-            if decision < 1 or 2 < decision:
+            if decision < 1 or 3 < decision:
                 continue
             else:
                 break
-    if decision == 2:
+    if decision == 1:
+        continue
+    elif decision == 2:
+        leaderboards.display()
+    elif decision == 3:
         break
