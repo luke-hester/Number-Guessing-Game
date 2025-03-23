@@ -78,7 +78,6 @@ def game():
 
     print("Let's start the game!\n")
     answer = randint(1, 100)
-    print(answer)
     start_time = time.time()
 
     while guesses_total - guesses_used > 0:
