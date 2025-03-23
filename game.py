@@ -114,8 +114,7 @@ def game():
         print(f"Sorry, you didn't get it this time! The answer was {answer}")
 
 while True:
-    game()
-    print("1. Play again")
+    print("1. Play")
     print("2. View leaderboard")
     print("3. Quit game")
     while True:
@@ -129,7 +128,7 @@ while True:
             else:
                 break
     if decision == 1:
-        continue
+        game()
     elif decision == 2:
         leaderboards.display()
     elif decision == 3:
